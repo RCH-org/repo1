@@ -39,7 +39,7 @@ for repo in repos:
         subprocess.run(["git", "clone", "--depth", "1", repo_url], check=True)
         os.chdir(repo_name)
 
-        # Get default branch dynamically
+        # Get default branch
         default_branch = repo.default_branch
 
         # Create a new branch
