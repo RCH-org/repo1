@@ -3,7 +3,7 @@ import subprocess
 from github import Github
 
 # Load PAT_GITHUB from environment variables
-GITHUB_TOKEN = os.getenv("PAT_GITHUB")
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 if not GITHUB_TOKEN:
     print("ERROR: PAT_GITHUB is not set. Exiting...")
     exit(1)
