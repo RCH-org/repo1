@@ -1,0 +1,32 @@
+name: Update ReadTheDocs YAML Across Repos
+
+on:
+  push:
+    paths:
+      - 'scripts/update_rtd_yaml.py'  # Runs when this script is modified
+    branches:
+      - main
+
+  workflow_dispatch:  # Allows manual trigger 
+
+jobs:
+  update_rtd:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'  # Uses latest Python 3
+
+      - name: Install dependencies
+        run: pip install PyGithub
+
+      - name: Run update script
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}  # Updated to use PAT_GITHUB
+          GITHUB_USERNAME: "rsagar-rch"
+          ORGANIZATION_NAME: "RCH-org"
+        run: scripts/update_rtd_yaml.py
