@@ -11,12 +11,15 @@ if not GITHUB_TOKEN:
 else:
     print("token is set correctly!")
 
-GITHUB_USERNAME = "rsagar-rch"
-ORGANIZATION_NAME = "RCH-org"
+GITHUB_USERNAME = os.getenv("GITHUB_USERNAME")
+ORGANIZATION_NAME = os.getenv("ORGANIZATION_NAME")
 
-# Authenticate with GitHub APIs
-github_client = Github(GITHUB_TOKEN)
-org = github_client.get_organization(ORGANIZATION_NAME)
+try:
+    github_client = Github(GITHUB_TOKEN)
+    org = github_client.get_organization(ORGANIZATION_NAME)
+except Exception as e:
+    print(f"ERROR: Failed to authenticate or fetch organization: {e}")
+    exit(1)
 
 # Get all repositories in the organization (except repo1)
 repos = [repo for repo in org.get_repos() if repo.name != "repo1"]
@@ -39,6 +42,10 @@ for repo in repos:
         # Clone repo (shallow clone for speed)
         subprocess.run(["git", "clone", "--depth", "1", repo_url], check=True)
         os.chdir(repo_name)
+
+        # Configure Git identity for CI runner
+        subprocess.run(["git", "config", "user.name", GITHUB_USERNAME], check=True)
+        subprocess.run(["git", "config", "user.email", f"{GITHUB_USERNAME}@users.noreply.github.com"], check=True)
 
         # Get default branch
         default_branch = repo.default_branch
@@ -68,7 +75,12 @@ for repo in repos:
         print(f"PR created successfully for {repo_name}")
 
     except subprocess.CalledProcessError as e:
-        print(f"ERROR processing {repo_name}: {e}")
+        print(f"ERROR: Git command failed for {repo_name}: {e}")
+        exit(1)
+
+    except Exception as e:
+        print(f"ERROR: Failed to create PR for {repo_name}: {e}")
+        exit(1)
     
     finally:
         # Clean up - remove repo folder using Linux `rm -rf`
