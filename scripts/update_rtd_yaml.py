@@ -4,16 +4,17 @@ from github import Github
 
 # Load PAT_GITHUB from environment variables
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+print(f"GITHUB_TOKEN: '{GITHUB_TOKEN}' ")
 if not GITHUB_TOKEN:
-    print("ERROR: PAT_GITHUB is not set. Exiting...")
+    print("ERROR: token is not set. Exiting...")
     exit(1)
 else:
-    print("PAT_GITHUB is set correctly!")
+    print("token is set correctly!")
 
 GITHUB_USERNAME = "rsagar-rch"
 ORGANIZATION_NAME = "RCH-org"
 
-# Authenticate with GitHub API
+# Authenticate with GitHub APIs
 github_client = Github(GITHUB_TOKEN)
 org = github_client.get_organization(ORGANIZATION_NAME)
 

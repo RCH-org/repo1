@@ -23,7 +23,7 @@ jobs:
 
       - name: Run update script
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}  # to use PAT_GITHUB
+          GITHUB_TOKEN: ${{ secrets.CLASSIC_TEST }}  # to use PAT_GITHUB
           GITHUB_USERNAME: "rsagar-rch"
           ORGANIZATION_NAME: "RCH-org"
         run: python scripts/update_rtd_yaml.py
