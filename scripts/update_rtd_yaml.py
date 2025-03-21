@@ -43,7 +43,7 @@ for repo in repos:
         # Create a new branch
         subprocess.run(["git", "checkout", "-b", "update-readthedocs"], check=True)
 
-        # Copy `.readthedocs.yaml` correctly using Linux `cp` command
+        # Copy `.readthedocs.yaml` using Linux `cp` command
         subprocess.run(["cp", SOURCE_FILE_PATH, ".readthedocs.yaml"], check=True)
 
         # Add, commit, and push changes
