@@ -10,8 +10,8 @@ if not GITHUB_TOKEN:
 else:
     print("PAT_GITHUB is set correctly!")
 
-GITHUB_USERNAME = "your_github_username"
-ORGANIZATION_NAME = "your_org_name"
+GITHUB_USERNAME = "rsagar-rch"
+ORGANIZATION_NAME = "RCH-org"
 
 # Authenticate with GitHub API
 github_client = Github(GITHUB_TOKEN)
