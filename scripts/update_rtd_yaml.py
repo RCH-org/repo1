@@ -7,6 +7,8 @@ GITHUB_TOKEN = os.getenv("PAT_GITHUB")
 if not GITHUB_TOKEN:
     print("ERROR: PAT_GITHUB is not set. Exiting...")
     exit(1)
+else:
+    print("PAT_GITHUB is set correctly!")
 
 GITHUB_USERNAME = "your_github_username"
 ORGANIZATION_NAME = "your_org_name"
