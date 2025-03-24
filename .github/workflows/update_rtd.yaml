@@ -1,9 +1,6 @@
 name: Update ReadTheDocs YAML Across Repos
 
 on:
-  push:
-    branches:
-      - dev
   workflow_dispatch:  # Allows manual trigger 
 
 jobs:

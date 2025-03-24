@@ -7,7 +7,7 @@ on:
     branches:
       - dev  # Adjust if you're using a different branch
 
-  workflow_dispatch:  # Still allows manual trigger
+  workflow_dispatch:  # allows manual trigger
 
 jobs:
   approve_merge:
