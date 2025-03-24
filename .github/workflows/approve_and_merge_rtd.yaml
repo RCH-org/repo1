@@ -1,7 +1,13 @@
 name: Approve & Merge ReadTheDocs PRs
 
 on:
-  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/auto_approve_and_merge.py'  # Trigger on changes to this script
+    branches:
+      - dev  # Adjust if you're using a different branch
+
+  workflow_dispatch:  # Still allows manual trigger
 
 jobs:
   approve_merge:
