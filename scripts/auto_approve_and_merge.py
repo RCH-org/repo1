@@ -13,11 +13,18 @@ if not token or not org_name or not author:
 client = Github(token)
 org = client.get_organization(org_name)
 
+print(f"Searching PRs under org: {org_name} for user: {author}")
+
 # Get all the repos (skip source repo)
 repos = [r for r in org.get_repos() if r.name != "repo1"]
 
 for repo in repos:
+    print(f"Checking repository: {repo.name}")
     prs = repo.get_pulls(state="open", head=f"{author}:update-readthedocs")
+
+    if prs.totalCount == 0:
+        print(f" No matching PRs found in {repo.name}")
+        continue
 
     for pr in prs:
         print(f"Found PR #{pr.number} in {repo.name}")
