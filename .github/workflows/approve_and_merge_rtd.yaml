@@ -1,0 +1,26 @@
+name: Approve & Merge ReadTheDocs PRs
+
+on:
+  workflow_dispatch:  # Manual trigger from Actions tab
+
+jobs:
+  approve_merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: pip install PyGithub
+
+      - name: Run approval & merge script
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEEPAK_PAT }}  # Token from Deepak
+          GITHUB_USERNAME: "rsagar-rch"
+          ORGANIZATION_NAME: "RCH-org"
+        run: python scripts/auto_approve_and_merge.py
