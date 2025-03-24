@@ -15,18 +15,21 @@ org = client.get_organization(org_name)
 
 print(f"Searching PRs under org: {org_name} for user: {author}")
 
-# Get all the repos (skip source repo)
-repos = [r for r in org.get_repos() if r.name != "repo1"]
+# Get all repos (excluding the automation source repo)
+repos = [repo for repo in org.get_repos() if repo.name != "repo1"]
 
 for repo in repos:
     print(f"Checking repository: {repo.name}")
-    prs = repo.get_pulls(state="open", head=f"{author}:update-readthedocs")
+    prs = repo.get_pulls(state="open")
 
-    if prs.totalCount == 0:
-        print(f" No matching PRs found in {repo.name}")
+    # Match PRs with branch name 'update-readthedocs'
+    matched_prs = [pr for pr in prs if pr.head.ref == "update-readthedocs"]
+
+    if not matched_prs:
+        print(f"No matching PRs found in {repo.name}")
         continue
 
-    for pr in prs:
+    for pr in matched_prs:
         print(f"Found PR #{pr.number} in {repo.name}")
 
         try:
@@ -42,3 +45,5 @@ for repo in repos:
 
         except Exception as e:
             print(f"Error with PR #{pr.number} in {repo.name}: {e}")
+
+print("PR approval and merge process completed!")
